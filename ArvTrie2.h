@@ -29,7 +29,7 @@ tp_no* insere_no_trie(tp_no* raiz, char* palavra) {
  	int tam = strlen(palavra);
     int i;
     for (i=0; i < tam; i++) {
-    	//palavras estão em minúsculo
+    	//palavras estï¿½o em minï¿½sculo
         int ind = (int) palavra[i] - 'a';
         if (no->filhos[ind] == NULL) {
             no->filhos[ind] = cria_no(palavra[i]);
@@ -56,7 +56,7 @@ int busca_no_trie(tp_no* raiz, char* palavra)
         return 1;
     return 0;
 }
- 
+
 int tem_filho(tp_no* raiz)
 {
 	int i;
@@ -71,7 +71,7 @@ int remove_no_trie(tp_no **raiz, char* palavra)
 	if (*raiz == NULL)
 		return 0;
 
-	// Enquanto não alcançar o final da palavra
+	// Enquanto nï¿½o alcanï¿½ar o final da palavra
 	if (*palavra)
 	{
 		if (*raiz != NULL && (*raiz)->filhos[*palavra - 'a'] != NULL &&
@@ -94,24 +94,34 @@ int remove_no_trie(tp_no **raiz, char* palavra)
 	// Se chegou no final da palavra a ser removida
 	if (*palavra == '\0' && (*raiz)->eh_folha)
 	{
-		// Se o nó é folha e não tem filhos
+		// Se o nï¿½ ï¿½ folha e nï¿½o tem filhos
 		if (!tem_filho(*raiz))
 		{
 			free(*raiz); 
 			(*raiz) = NULL;
-			return 1; // remove os nós ancestrais não-folha
+			return 1; // remove os nï¿½s ancestrais nï¿½o-folha
 		}
 
-		// se o nó corrente é um nó folha e tem filhos
+		// se o nï¿½ corrente ï¿½ um nï¿½ folha e tem filhos
 		else
 		{
-			// Marca o nó corrente como nó não folha
+			// Marca o nï¿½ corrente como nï¿½ nï¿½o folha
 			(*raiz)->eh_folha = 0;
-			return 0;	   // Não exclui os pais
+			return 0;	   // Nï¿½o exclui os pais
 		}
 	}
 
 	return 0;
 }
 
-
+// Print words in trie tree
+int print_word_in_trie(tp_no* raiz, char* palavra)
+{
+    tp_no * no = raiz;
+    for (int i = 0; i < LETRAS; i++) {
+        if (no->filhos[i] == NULL)
+            return 0;
+        printf("%c", no->letra);
+        no = no->filhos[i];
+    }
+}
