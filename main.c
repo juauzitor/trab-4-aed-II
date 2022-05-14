@@ -5,19 +5,29 @@
 
 void gerarstring(tp_no* raiz, char* palavraent){
     tp_no* no = raiz;
-    if (no != NULL && no->eh_folha == 1)
+    if (no != NULL && no->eh_folha == 1){
+        printf("%s\n", palavraent);
         return;
+    }
     
     for (int i = 0; i < LETRAS; i++)
     {
         if (no->filhos[i] != NULL){
-            char straux[2] = {no->filhos[i]->letra, '\0'};
-            strcat(palavraent, straux);
-            printf("%s\n", palavraent);
-            gerarstring(no->filhos[i], palavraent);
+            char copiaent[strlen(palavraent)+1];
+            for (int i = 0; i < strlen(palavraent); i++)
+            {
+                copiaent[i] = palavraent[i];             
+            }
+            //char straux[2] = {no->filhos[i]->letra, '\0'};
+            //strcat(copiaent, straux);
+            copiaent[strlen(palavraent)] = no->filhos[i]->letra;
+            copiaent[strlen(palavraent)+1] = '\0';
+            //printf("%s\n", palavraent);
+//            printf("%s\n", copiaent);
+            //gerarstring(no->filhos[i], palavraent);
+            gerarstring(no->filhos[i], copiaent);
         }
     }
-    
 }
 
 int imprimirs_no_trie(tp_no* raiz, char* substring)
@@ -47,8 +57,8 @@ int main (int argc, char *argv[]){
     }
     char substring[101];
     while(1){
+        printf("Digite a substring para que seja feito autcomplit!: ");
         scanf("%s", substring);
-        printf("Digite a substring para que seja feito autcomplit! %s\n", substring );
         imprimirs_no_trie(raiz,substring);
         break;
     }
